@@ -6,7 +6,7 @@
 #    By: coscialp <coscialp@student.le-101.fr>      +:+   +:    +:    +:+      #
 #                                                  #+#   #+    #+    #+#       #
 #    Created: 2020/01/22 17:11:32 by coscialp     #+#   ##    ##    #+#        #
-#    Updated: 2020/01/23 18:21:30 by coscialp    ###    #+. /#+    ###.fr      #
+#    Updated: 2020/01/31 11:41:16 by coscialp    ###    #+. /#+    ###.fr      #
 #                                                          /                   #
 #                                                         /                    #
 # **************************************************************************** #
@@ -28,11 +28,11 @@ TEST		= test
 
 all: $(NAME)
 
-$(NAME): $(OBJ)
+$(NAME): $(OBJ) $(HEADER)
 	ar rc $(NAME) $(OBJ)
 	ranlib $(NAME)
 
-%.o: %.s
+%.o: %.s $(HEADER)
 	nasm $(FLAGS) $< -o $@
 
 $(TEST):

@@ -1,19 +1,13 @@
 section .text
-    global _ft_write
+	global _ft_write
 
 _ft_write:
-    push	rbp
-	mov		rbp, rsp
+	mov rax, 0x2000004
+	syscall
+	mov		r10,	rcx
+	syscall
+	jae		.return
+	mov		rax,	-1
 
-    mov rax, 0x2000004
-    syscall
-    cmp rdx, 0
-    jne .neg
-
-    pop		rbp
+.return:
 	ret
-
-.neg:
-    mov rax, -1
-    pop		rbp
-    ret

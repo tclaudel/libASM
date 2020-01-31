@@ -13,5 +13,5 @@ _ft_strcpy:
 		jmp		.while_loop
 
 	.while_end:
-		mov		rax, rsi
+		mov		rax, rdi
 		ret
