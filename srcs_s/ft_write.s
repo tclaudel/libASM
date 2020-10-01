@@ -1,13 +1,19 @@
 section .text
-	global _ft_write
+	global ft_write
+	extern __errno_location
 
-_ft_write:
-	mov rax, 0x2000004
+ft_write:
+	mov rax, 1
 	syscall
-	mov		r10,	rcx
-	syscall
-	jae		.return
-	mov		rax,	-1
+    test rax, rax
+    jnl .return
 
+    push r10
+    neg rax
+    mov r10, rax
+    call __errno_location
+    mov dword [rax], r10d
+    mov rax, -1
+	pop r10
 .return:
 	ret

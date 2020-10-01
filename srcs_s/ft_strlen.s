@@ -1,16 +1,16 @@
 section .text
-	global	_ft_strlen
+	global	ft_strlen
 
-_ft_strlen:
-	xor		rsi, rsi
+ft_strlen:
+	xor		rsi, rsi			; i = 0
 
 .while_loop:
-	mov		cl, byte[rsi + rdi]
-	cmp		cl, 0
-	je		.while_end
-	inc		rsi
+	mov		cl, byte[rsi + rdi]	; char c = rdi[i]
+	cmp		cl, 0				; if c == 0
+	je		.end				; true go end
+	inc		rsi					; else i++
 	jmp		.while_loop
 
-.while_end:
+.end:
 	mov		rax, rsi
 	ret

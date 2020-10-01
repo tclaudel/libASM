@@ -1,22 +1,23 @@
 section .text
-	global _ft_strdup
-	extern _ft_strlen, _ft_strcpy, _malloc
+	global ft_strdup
+	extern ft_strlen
+	extern ft_strcpy
+	extern malloc
+	extern exit
 
-_ft_strdup:
+ft_strdup:
 	push rdi
-	call _ft_strlen
-	mov rdi, rax
-	inc rdi
-
-	call _malloc
-	cmp rax, 0
+	call ft_strlen      ; ft_strlen
+	mov rdi, rax        ; move ft_strlen result in rdi
+	inc rdi             ; i++
+	call malloc         ; malloc sizof i
 	pop rdi
-	je .exit
-	mov rdx, rax
-	mov rsi, rdi
-	mov rdi, rdx
+	cmp rax, 0          ; if malloc == 0
+	je .exit            ; exit
+	mov rsi, rdi        ; 
+	mov rdi, rax        ;
+	jmp ft_strcpy		; ft_strcpy(char *dest, const char *src)
 
-	call _ft_strcpy
 
 .exit:
 	ret

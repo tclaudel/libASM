@@ -20,23 +20,20 @@ NAME		=	libasm.a
 
 HEADER		=	libasm.h
 
-FLAGS		=	-f macho64
+FLAGS		=	-f elf64
 
 RM			=	rm -rf
-
-TEST		= test
 
 all: $(NAME)
 
 $(NAME): $(OBJ) $(HEADER)
-	ar rc $(NAME) $(OBJ)
-	ranlib $(NAME)
+	ar rcs $(NAME) $(OBJ)
 
 %.o: %.s $(HEADER)
 	nasm $(FLAGS) $< -o $@
 
-$(TEST):
-	gcc -Wall -Werror -Wextra main.c libasm.a -o $(TEST)
+test:
+	gcc -Wall -Werror -Wextra -no-pie -o test main.c libasm.a
 
 clean:
 	${RM} ${OBJ}
@@ -45,3 +42,5 @@ fclean: clean
 	${RM} ${NAME} ${TEST}
 	
 re: fclean all
+
+.PHONY: test

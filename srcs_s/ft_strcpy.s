@@ -1,17 +1,17 @@
 section .text
-	global  _ft_strcpy
+	global  ft_strcpy
 
-_ft_strcpy:
-	xor     rdx,    rdx
+ft_strcpy:
+	xor     rdx,    rdx			; i = 0
 
-	.while_loop:
-		mov		cl, byte[rsi + rdx]
-		mov		byte[rdi + rdx], cl
-		cmp		cl, 0
-		je		.while_end
-		inc		rdx
-		jmp		.while_loop
+.while_loop:
+	mov		cl, byte[rsi + rdx] ; char c = rsi[i]
+	mov		byte[rdi + rdx], cl	; rdi[i] = c
+	cmp		cl, 0				; if c == 0
+	je		.end				; if true return
+	inc		rdx					; else i++;
+	jmp		.while_loop
 
-	.while_end:
-		mov		rax, rdi
-		ret
+.end:
+	mov		rax, rdi
+	ret

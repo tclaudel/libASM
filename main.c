@@ -1,20 +1,9 @@
-/* ************************************************************************** */
-/*                                                          LE - /            */
-/*                                                              /             */
-/*   main.c                                           .::    .:/ .      .::   */
-/*                                                 +:+:+   +:    +:  +:+:+    */
-/*   By: coscialp <coscialp@student.le-101.fr>      +:+   +:    +:    +:+     */
-/*                                                 #+#   #+    #+    #+#      */
-/*   Created: 2020/01/10 11:41:22 by coscialp     #+#   ##    ##    #+#       */
-/*   Updated: 2020/01/23 18:21:07 by coscialp    ###    #+. /#+    ###.fr     */
-/*                                                         /                  */
-/*                                                        /                   */
-/* ************************************************************************** */
-
 #include "libasm.h"
+#include <errno.h>
+#include <unistd.h>
 #define BUF 32
 
-int		main(int ac, char **av)
+int		main(void)
 {
 	char dest[100];
 
@@ -43,24 +32,45 @@ int		main(int ac, char **av)
 	printf("%s\n", ft_strdup("i"));
 	printf("%s\n", ft_strdup("pouet"));
 
+	int ret;
 	printf("\n-- ft_write\n\n");
-	printf("ret was %ld\n", ft_write(1, "truc\n", 5));
-	printf("ret was %ld\n", ft_write(1, "aaa\n", 4));
+	dprintf(1, "\nft_write(1, \"truc\\n\", 5)\n");
+	errno = 0;
+	ret = ft_write(1, "truc\n", 5);
+	dprintf(1, "ret = %d\n", ret);
+	dprintf(1, "errno = %d\n", errno);
+	dprintf(1, "\nft_write(1, \"aaaaaaaaaaaaa\\n\", 5)\n");
+	errno = 0;
+	ret = ft_write(1, "aaaaaaaaaa   aaa\n", 17);
+	dprintf(1, "ret = %d\n", ret);
+	dprintf(1, "errno = %d\n", errno);
+	dprintf(1, "\nft_write(3, \"pouet\\n\", 5)\n");
+	errno = 0;
+	ret = ft_write(3, "pouet\n", 6);
+	dprintf(1, "ret = %d\n", ret);
+	dprintf(1, "errno = %d\n", errno);
+	dprintf(1, "\nwrite(3, \"pouet\\n\", 5)\n");
+	ret = write(3, "pouet\n", 6);
+	dprintf(1, "ret = %d\n", ret);
+	dprintf(1, "errno = %d\n", errno);
 
 	printf("\n-- ft_read\n\n");
-	int	ret;
-	int fd = open(av[ac -1], O_RDONLY);
+	int fd = open("test.txt", O_RDONLY);
 	char buf[BUF + 1];
+	errno = 0;
 	while ((ret = ft_read(fd, buf, BUF)) > 0)
 	{
 		buf[ret] = 0;
-		printf("%s", buf);
+		dprintf(1, "%s\n", buf);
 	}
-	printf("\nret is %d\n", ret);
+	dprintf(1, "ret = %d\n", ret);
+	dprintf(1, "errno = %d\n", errno);
+	errno = 0;
 	while ((ret = ft_read(42, buf, BUF)) > 0)
 	{
 		buf[ret] = 0;
 		printf("%s", buf);
 	}
-	printf("\nret is %d\n", ret);
+	dprintf(1, "ret = %d\n", ret);
+	dprintf(1, "errno = %d\n", errno);
 }

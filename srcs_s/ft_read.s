@@ -1,13 +1,20 @@
 section .text
-    global _ft_read
+    global ft_read
+    extern __errno_location
 
-_ft_read:
-    mov rax, 0x2000003
+ft_read:
+    mov rax, 0
     syscall
-    mov		r10,	rcx
-	syscall
-	jae		.return
-	mov		rax,	-1
+    test rax, rax
+    jnl .return
+
+    push r10
+    neg rax
+    mov r10, rax
+    call __errno_location
+    mov dword [rax], r10d
+    mov rax, -1
+	pop r10
 
 .return:
 	ret
